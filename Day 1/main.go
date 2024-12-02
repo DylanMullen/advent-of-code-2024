@@ -16,7 +16,9 @@ func main() {
 	quickSort(right, 0, len(right)-1)
 
 	distance := totalDistance(left, right)
+	similar := similar(left, right)
 	fmt.Println(distance)
+	fmt.Println(similar)
 }
 
 func read() (left, right []int) {
@@ -65,6 +67,35 @@ func totalDistance(left, right []int) int {
 	}
 
 	return total
+}
+
+func similar(left, right []int) int {
+	dict := checkOccurances(left, right)
+
+	total := 0
+
+	for k, v := range dict {
+		similar := k * v
+		total += similar
+	}
+
+	return total
+
+}
+
+func checkOccurances(left, right []int) map[int]int {
+	dict := make(map[int]int)
+
+	for _, v := range left {
+		dict[v] = 0
+	}
+
+	for _, v := range right {
+		if _, ok := dict[v]; ok {
+			dict[v]++
+		}
+	}
+	return dict
 }
 
 /* Quick Sort */
